@@ -1,0 +1,34 @@
+id: auth-data-leak
+
+info:
+  name: auth data leak
+  author: linceBLA
+  description: Template to check on authentificated pages if there is Data Leak via url name
+  severity: info
+  tags: data
+      
+requests:
+  - method: GET
+    path: 
+      - "{{BaseURL}}"
+      
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "username"
+        part: body
+
+      - type: word
+        words:
+          - "words supposed to be confidential"
+        part: BaseURL
+
+      - type: status
+        status:
+          - 200
+
+      - type: status
+        status:
+          - 302
+        negative: true

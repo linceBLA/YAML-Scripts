@@ -1,0 +1,29 @@
+id: auth-PII-pages
+
+info:
+  name: auth PII pages
+  author: linceBLA
+  description: Template to check if pages are authentificated pages with PII Data
+  severity: high
+  tags: PII
+      
+requests:
+  - method: GET
+    path: 
+      - "{{BaseURL}}"
+      
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "username"
+          
+      - type: word
+        words:
+          - "Key words of PII like PassportNo, SSN..."
+        part: body
+        condition: or
+        
+      - type: status
+        status:
+          - 200
